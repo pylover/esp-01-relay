@@ -13,7 +13,10 @@ ICACHE_FLASH_ATTR
 bool params_save(struct params* params) {
 	params->magic = PARAMS_MAGIC;
     system_soft_wdt_feed();
-    spi_flash_erase_protect_disable();
+    if (!spi_flash_erase_protect_disable()) {
+        ERROR("spi_flash_erase_protect_disable() Error!");
+        return false;
+    }
 	return system_param_save_with_protect(PARAMS_SECTOR, params, 
 			sizeof(struct params));
 }

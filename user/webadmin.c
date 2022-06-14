@@ -34,6 +34,13 @@ httpd_err_t relay_off(struct httpd_session *s) {
 }
 
 
+static ICACHE_FLASH_ATTR
+httpd_err_t relay_toggle(struct httpd_session *s) {
+  toggle_relay_status();
+  return HTTPD_RESPONSE_HEAD(s, HTTPSTATUS_OK);
+}
+
+
 #define RELAY_JSON "{" \
   "\"status\": \"%s\"" \
 "}"
@@ -430,35 +437,6 @@ httpd_err_t webadmin_params_get(struct httpd_session *s) {
 }
 
 
-//static ICACHE_FLASH_ATTR
-//httpd_err_t webadmin_favicon(struct httpd_session *s) {
-//    #define FAVICON_SIZE    495
-//
-//    #if SPI_SIZE_MAP == 2
-//    #define FAVICON_FLASH_SECTOR    0x77    
-//    #elif SPI_SIZE_MAP == 4
-//    #define FAVICON_FLASH_SECTOR    0x200    
-//    #elif SPI_SIZE_MAP == 6
-//    #define FAVICON_FLASH_SECTOR    0x200    
-//    #endif
-//   
-//
-//    char buf[4 * 124];
-//    //os_memset(buff, 0, 4 * 124);
-//    int result = spi_flash_read(
-//            FAVICON_FLASH_SECTOR * SECT_SIZE,
-//            (uint32_t*) buf,
-//            4 * 124
-//        );
-//    
-//    if (result != SPI_FLASH_RESULT_OK) {
-//        ERROR("SPI Flash write failed: %d", result);
-//        return WEBADMIN_ERR_FLASHREAD;
-//    }
-//    return HTTPD_RESPONSE_ICON(s, HTTPSTATUS_OK, buf, FAVICON_SIZE);
-//}
-
-
 static ICACHE_FLASH_ATTR
 httpd_err_t webadmin_toggle_boot(struct httpd_session *s) {
     httpd_err_t err;
@@ -554,31 +532,16 @@ httpd_err_t webadmin_sysinfo(struct httpd_session *s) {
 }
 
 
-#include "webtest.c"
-
-
 static struct httpd_route routes[] = {
     /* relay */
-    {"GET",   "/relay",           relay_get     },
-    {"ON",    "/relay",           relay_on      },
-    {"OFF",   "/relay",           relay_off     },
+    {"GET",    "/relay",           relay_get     },
+    {"TOGGLE", "/relay",           relay_toggle  },
+    {"ON",     "/relay",           relay_on      },
+    {"OFF",    "/relay",           relay_off     },
 
     /* Upgrade firmware over the air (wifi) */
     {"UPGRADE",    "/firmware",           webadmin_fw_upgrade     },
     
-    /* Under test, needed by webtest.sg &| make test */
-    {"DOWNLOAD",   "/demo/multipartstreams", demo_download_stream   },
-    {"UPLOAD",     "/demo/multipartstreams", demo_multipart_stream  },
-    {"ECHO",       "/demo/multipartforms",   demo_multipart         },
-    {"ECHO",       "/demo/urlencodedforms",  demo_urlencoded        },
-    {"ECHO",       "/demo/queries",          demo_querystring       },
-    {"ECHO",       "/demo/headers",          demo_headersecho       },
-    {"DOWNLOAD",   "/demo",                  demo_download          },
-    {"GET",        "/demo",                  demo_index             },
-
-    /* TLS Test */
-    {"TEST",       "/tlsclient",             demo_tls_test          },
-
     /* Feel free to change these handlers */
     {"DISCOVER",   "/uns",                   webadmin_uns_discover  },
 

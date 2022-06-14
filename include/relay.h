@@ -3,8 +3,8 @@
 
 
 enum relay_status {
-    RELAY_ON = 0,
-    RELAY_OFF = 1
+    RELAY_OFF = 0,
+    RELAY_ON = 1
 };
 
 #define RELAY_NUM		       0

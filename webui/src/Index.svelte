@@ -4,6 +4,9 @@ import Section from './Section.svelte';
 import Button from './Button.svelte';
 
 let loading = true;
+let relay = {
+  status: "Off"
+};
 let p = {};
 
 onMount(async () => {
@@ -16,6 +19,7 @@ onMount(async () => {
   else {
     throw new Error(res.text());
   }
+  loadRelay();
 });
 
 
@@ -37,6 +41,31 @@ const sysinfo = [
   { title: 'Free Memory', value: 'free'},
   { title: 'RTC', value: 'rtc'},
 ];
+
+/* Relay */
+
+async function toggleRelay() {
+  disabled = true;
+  const res = await fetch(`/relay`, {
+    method: 'TOGGLE',
+  });
+  await loadRelay();
+}
+
+let disabled = true;
+
+async function loadRelay() {
+  disabled = true;
+  const res = await fetch(`/relay`);
+  if (res.ok) {
+    relay = await res.json();
+    disabled = false;
+  }
+  else {
+    throw new Error(res.text());
+  }
+}
+
 </script>
 
 <style type="text/sass">
@@ -53,6 +82,12 @@ const sysinfo = [
 </style>
 
 <div id="index">
+  <Section title="Relay" icon="hammer" />
+  <div class="all10 row">
+    <Button {disabled} title="Toggle" icon="switch" on:click={toggleRelay} />
+    <div class="all10">{relay.status}</div>
+  </div>
+
   <Section title="System Status" icon="stats-dots" />
   {#each sysinfo as n, i}
     <div class="all10 row">
@@ -97,5 +132,3 @@ const sysinfo = [
     to control the device via CLI.
   </p>
 </div>
-
-
