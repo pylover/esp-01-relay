@@ -1,0 +1,57 @@
+.row 
+  position: relative
+  &::after
+    display: block
+    clear: both
+    content: ""
+
+@mixin column
+  display: block
+  float: left
+  box-shadow: $colshadow  
+  overflow: hidden
+  min-height: $gutter
+
+@each $name, $size in $devices
+  @media (min-width: nth($size, 1)) and (max-width: nth($size, 2))
+    html
+      font-size: nth($size, 3)
+
+    .#{$name}0
+      display: none !important
+
+    .#{$name}25p
+      @include column
+      width: 25%
+
+    .#{$name}33p
+      @include column
+      width: 33.33%
+
+    .mobile
+      @if nth($size, 1) == 0
+        display: block
+      @else
+        display: none !important 
+
+    @for $i from 1 through 10
+      .#{$name}#{$i} 
+        @include column
+        width: (10 * $i) * 1%
+
+
+@for $i from 1 through 10
+  .all#{$i} 
+    @include column
+    width: (10 * $i) * 1%
+
+  .all25p
+    @include column
+    width: 25%
+
+  .all33p
+    @include column
+    width: 33.33%
+
+  .p#{$i}
+    padding: $gutter * $i

@@ -1,0 +1,12 @@
+# C
+*.o
+
+.output
+
+# vim
+.*.sw[po]
+.ropeproject
+
+
+# Projejct specific
+bin

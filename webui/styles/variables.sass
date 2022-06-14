@@ -1,0 +1,35 @@
+/* Colors */
+$bg: #2d2d2d
+$content-bg: #393939
+$forecolor: #e7e8eb
+$jingool: #f48224
+$mangool: #5a9e70
+
+$button-bg: $bg
+$nav-hover-bg: $content-bg
+$content-border: 1px solid #404345
+
+/* Grid */
+$gutter: 8px
+
+$devices:                     ("sm": (   0px,  768px, 15px))
+$devices: map-merge($devices, ("md": ( 768px, 1024px, 14px)))
+$devices: map-merge($devices, ("lg": (1024px, 1200px, 13px)))
+$devices: map-merge($devices, ("xg": (1200px, 4096px, 13px)))
+$colshadow: none
+//$colshadow: inset 0 0 1px #0f0; 
+
+/* Font */
+$font: Helvetica
+
+/* Nav */
+$nav-icon-size: 28px
+
+@mixin grayscale
+  -webkit-filter: grayscale(100%)
+  filter: grayscale(100%)
+
+@mixin nofilter
+  -webkit-filter: none
+  filter: none
+

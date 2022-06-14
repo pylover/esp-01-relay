@@ -1,0 +1,9 @@
+{
+  "zone": "dev",
+  "name": "node",
+  "uptime": 2342,
+  "boot": "user1",
+  "version": "3.0.1",
+  "free": 34890,
+  "rtc": 23424223
+}

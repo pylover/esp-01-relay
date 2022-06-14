@@ -1,0 +1,7 @@
+{
+  "zone": "dev",
+  "name": "node",
+  "apPsk": "foobarbaz",
+  "ssid": "foo",
+  "psk": "foobarbaz"
+}
