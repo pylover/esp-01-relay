@@ -62,7 +62,7 @@ void boothello() {
 	webadmin_start(&params);
 
     struct rst_info *r = system_get_rst_info();
-    INFO("Boot reason: %d\n", r->reason);
+    INFO("Boot reason: %d", r->reason);
     if (r->reason == REASON_WDT_RST || 
             r->reason == REASON_EXCEPTION_RST ||
             r->reason == REASON_SOFT_WDT_RST) {

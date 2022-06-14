@@ -4,6 +4,7 @@
 #include "httpd.h"
 #include "uns.h"
 #include "http.h"
+#include "relay.h"
 #include "helpers.c"
 
 #include <upgrade.h>
@@ -19,9 +20,43 @@
 #define WEBADMIN_BUFFSIZE             1024
 
 
+static ICACHE_FLASH_ATTR
+httpd_err_t relay_on(struct httpd_session *s) {
+  update_relay_status(RELAY_ON);
+  return HTTPD_RESPONSE_HEAD(s, HTTPSTATUS_OK);
+}
+
+
+static ICACHE_FLASH_ATTR
+httpd_err_t relay_off(struct httpd_session *s) {
+  update_relay_status(RELAY_OFF);
+  return HTTPD_RESPONSE_HEAD(s, HTTPSTATUS_OK);
+}
+
+
+#define RELAY_JSON "{" \
+  "\"status\": \"%s\"" \
+"}"
+
+
 static struct params *params;
 static char buff[WEBADMIN_BUFFSIZE];
 static size16_t bufflen;
+
+
+static ICACHE_FLASH_ATTR
+httpd_err_t relay_get(struct httpd_session *s) {
+  char *st;
+  if (get_relay_status() == RELAY_ON) {
+     st = "On"; 
+  }
+  else {
+    st = "Off";
+  }
+  bufflen = os_sprintf(buff, RELAY_JSON, st);
+  return HTTPD_RESPONSE_JSON(s, HTTPSTATUS_OK, buff, bufflen);
+}
+
 
 
 struct fileserve {
@@ -523,6 +558,10 @@ httpd_err_t webadmin_sysinfo(struct httpd_session *s) {
 
 
 static struct httpd_route routes[] = {
+    /* relay */
+    {"GET",   "/relay",           relay_get     },
+    {"ON",    "/relay",           relay_on      },
+    {"OFF",   "/relay",           relay_off     },
 
     /* Upgrade firmware over the air (wifi) */
     {"UPGRADE",    "/firmware",           webadmin_fw_upgrade     },

@@ -6,12 +6,14 @@
 
 
 #define PARAMS_SECTOR (USER_PARTITION_PARAMS_ADDR / SECT_SIZE) 
-#define PARAMS_MAGIC '@'
+#define PARAMS_MAGIC '^'
 
 
 ICACHE_FLASH_ATTR 
 bool params_save(struct params* params) {
 	params->magic = PARAMS_MAGIC;
+    system_soft_wdt_feed();
+    spi_flash_erase_protect_disable();
 	return system_param_save_with_protect(PARAMS_SECTOR, params, 
 			sizeof(struct params));
 }

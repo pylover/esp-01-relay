@@ -1,5 +1,5 @@
 
-# Helloword 
+# ESP-01-Relay 
 
 ### Build
 
@@ -19,12 +19,12 @@ Or use predefined make macros:
 
 ```bash
 make clean
-make flash_map6user1 
+make flash_map2user1 
 
 cd webui
 npm install
 cd ..
-make flash_map6webui
+make flash_map2webui
 
 ```
 
