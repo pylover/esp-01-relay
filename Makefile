@@ -276,9 +276,9 @@ flash_map2user2: map2user2
 .PHONY: cleanup_map2params
 cleanup_map2params:
 	$(ESPTOOL_WRITE) --flash_size 1MB  \
-		0x07d000 $(SDK_PATH)/bin/blank.bin \
-		0x07e000 $(SDK_PATH)/bin/blank.bin \
-		0x07f000 $(SDK_PATH)/bin/blank.bin 
+		0x070000 $(SDK_PATH)/bin/blank.bin \
+		0x071000 $(SDK_PATH)/bin/blank.bin \
+		0x072000 $(SDK_PATH)/bin/blank.bin 
 
 .PHONY: flash_map2webui
 flash_map2webui: webui

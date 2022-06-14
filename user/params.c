@@ -6,17 +6,17 @@
 
 
 #define PARAMS_SECTOR (USER_PARTITION_PARAMS_ADDR / SECT_SIZE) 
-#define PARAMS_MAGIC '^'
+#define PARAMS_MAGIC '!'
 
 
 ICACHE_FLASH_ATTR 
 bool params_save(struct params* params) {
 	params->magic = PARAMS_MAGIC;
-    system_soft_wdt_feed();
-    if (!spi_flash_erase_protect_disable()) {
-        ERROR("spi_flash_erase_protect_disable() Error!");
-        return false;
-    }
+    // system_soft_wdt_feed();
+    // if (!spi_flash_erase_protect_disable()) {
+    //     ERROR("spi_flash_erase_protect_disable() Error!");
+    //     return false;
+    // }
 	return system_param_save_with_protect(PARAMS_SECTOR, params, 
 			sizeof(struct params));
 }
@@ -40,5 +40,3 @@ params_defaults(struct params* params) {
 	params->station_psk[0] = 0;
 	return params_save(params);
 }
-
-
