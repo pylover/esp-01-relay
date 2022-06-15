@@ -10,7 +10,7 @@
 
 
 #define PARAMS_SECTOR (USER_PARTITION_PARAMS_ADDR / SECT_SIZE) 
-#define PARAMS_MAGIC '@'
+#define PARAMS_MAGIC '#'
 
 
 #define PARAMS_PRINT(p) INFO(CR"name: %s.%s, ssid: %s psk: %s ap-psk: %s", \
