@@ -5,6 +5,7 @@
 #include <user_interface.h>
 
 
+ICACHE_FLASH_ATTR 
 bool params_save(struct params* params) {
 	params->magic = PARAMS_MAGIC;
 	return system_param_save_with_protect(PARAMS_SECTOR, params, 
