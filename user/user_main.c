@@ -6,7 +6,6 @@
 #include "debug.h"
 #include "status.h"
 #include "uns.h"
-#include "interrupt.h"
 
 // SDK
 #include <ets_sys.h>
@@ -87,6 +86,12 @@ void user_init(void) {
     
     /* Uncomment and edit the interrupt.c to configure interrupts */
     //interrupt_init();
+
+    relay_init();
+
+    INFO("");
+    INFO("BOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOTING");
+    INFO("");
 
 	configured = params_load(&params);
 	if (!configured) {

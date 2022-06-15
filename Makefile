@@ -49,9 +49,7 @@ INDEXHTML_DEFLATE = $(INDEXHTML).deflate
 
 CCFLAGS += \
 	-Os \
-	-DSPI_SIZE_MAP=$(SPI_SIZE_MAP) \
-	-DSNTP_ENABLED=1 \
-	-DTLS_ENABLED=1
+	-DSPI_SIZE_MAP=$(SPI_SIZE_MAP)
 
 
 TARGET_LDFLAGS =		\
@@ -92,7 +90,6 @@ LINKFLAGS_eagle.app.v6 = \
 	-llwip	\
 	-lwpa	\
 	-lcrypto	\
-	-lssl \
 	-lmain	\
 	-lupgrade \
 	-ldriver \
@@ -100,6 +97,7 @@ LINKFLAGS_eagle.app.v6 = \
 	$(DEP_LIBS_eagle.app.v6)					\
 	-Wl,--end-group
 
+#	-lssl \
 #	-ljson	\
 #	-lsmartconfig \
 #	-lmbedtls	\
@@ -276,18 +274,18 @@ flash_map2user2: map2user2
 .PHONY: cleanup_map2params
 cleanup_map2params:
 	$(ESPTOOL_WRITE) --flash_size 1MB  \
-		0x070000 $(SDK_PATH)/bin/blank.bin \
-		0x071000 $(SDK_PATH)/bin/blank.bin \
-		0x072000 $(SDK_PATH)/bin/blank.bin 
+		0x0f8000 $(SDK_PATH)/bin/blank.bin \
+		0x0f9000 $(SDK_PATH)/bin/blank.bin \
+		0x0fa000 $(SDK_PATH)/bin/blank.bin 
 
 .PHONY: flash_map2webui
 flash_map2webui: webui
 	$(ESPTOOL_WRITE) --flash_size 1MB  \
-		0x7A000 $(INDEXHTML_BIN)
+		0xF3000 $(INDEXHTML_BIN)
 
 .PHONY: upload_map2webui
 upload_map2webui: webui
-	-uns http post $(HOST)/0x7a :$(INDEXHTML_DEFLATE)
+	-uns http post $(HOST)/0xF3 :$(INDEXHTML_DEFLATE)
 
 .PHONY: flash_map2cacert
 flash_map2cacert:

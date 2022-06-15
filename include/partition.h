@@ -29,12 +29,11 @@ Flash Maps
 #error "The flash map is not supported"
 
 #elif (SPI_FLASH_SIZE_MAP == 2)
-#define SYSTEM_PARTITION_OTA_SIZE				0x5A000
-#define USER_PARTITION_PARAMS_ADDR  			0x70000
+#define SYSTEM_PARTITION_OTA_SIZE				0x40000
 
-#define SYSTEM_PARTITION_SSL_CLIENT_CA_ADDR     0x79000
-#define USER_INDEXHTML_ADDR                     0x7A000
 #define SYSTEM_PARTITION_OTA_2_ADDR				0x81000
+#define USER_INDEXHTML_ADDR                     0xF3000
+#define USER_PARTITION_PARAMS_ADDR  			0xF8000
 #define SYSTEM_PARTITION_RF_CAL_ADDR			0xFB000
 #define SYSTEM_PARTITION_PHY_DATA_ADDR			0xFC000
 #define SYSTEM_PARTITION_SYSTEM_PARAMETER_ADDR	0xFD000
@@ -100,7 +99,7 @@ Flash Maps
 #endif
 
 
-static const partition_item_t at_partition_table[6] = {
+static const partition_item_t at_partition_table[] = {
     { 
         SYSTEM_PARTITION_BOOTLOADER, 	
         0x0, 
@@ -131,6 +130,11 @@ static const partition_item_t at_partition_table[6] = {
         SYSTEM_PARTITION_SYSTEM_PARAMETER_ADDR, 
         SECT_SIZE * 3
     },
+    // {
+    //     100,
+    //     USER_PARTITION_PARAMS_ADDR,
+    //     SECT_SIZE * 3
+    // }
     // {
     //     SYSTEM_PARTITION_SSL_CLIENT_CA,
     //     SYSTEM_PARTITION_SSL_CLIENT_CA_ADDR,

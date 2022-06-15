@@ -560,7 +560,6 @@ static struct httpd_route routes[] = {
 
 ICACHE_FLASH_ATTR
 int webadmin_start(struct params *_params) {
-    relay_init();
 
     err_t err;
     params = _params;
