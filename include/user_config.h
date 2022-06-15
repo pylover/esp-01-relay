@@ -7,7 +7,7 @@
 #define __version__ "0.1.0"
 
 #define PARAMS_DEFAULT_ZONE "dev"
-#define PARAMS_DEFAULT_NAME "esp01Relay"
+#define PARAMS_DEFAULT_NAME "esprelay"
 #define PARAMS_DEFAULT_AP_PSK ""
 #define PARAMS_DEFAULT_STATION_SSID ""
 #define PARAMS_DEFAULT_STATION_PSK ""
